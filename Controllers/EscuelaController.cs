@@ -12,6 +12,9 @@ namespace NetCore_Platzi.Controllers
          escuela.FoundationYear = 2005;
          escuela.SchoolId = Guid.NewGuid().ToString();
          escuela.Name = "Platzi School";
+
+         ViewBag.DynamicThings = "Explorando ASP.NET";
+
          return View(escuela);
       }
    }
