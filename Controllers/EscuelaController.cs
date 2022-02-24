@@ -9,9 +9,16 @@ namespace NetCore_Platzi.Controllers
       public IActionResult Index()
       {
          var escuela = new Escuela();
-         escuela.FoundationYear = 2005;
-         escuela.SchoolId = Guid.NewGuid().ToString();
-         escuela.Name = "Platzi School";
+         escuela.AñoDeCreación = 2005;
+         escuela.UniqueId = Guid.NewGuid().ToString();
+         escuela.Nombre = "Platzi School";
+         escuela.Ciudad = "Lima";
+         escuela.Pais = "Peru";
+         escuela.TipoEscuela = TiposEscuela.Secundaria;
+         escuela.Dirección = "Av. Perú s/n";
+
+         ViewBag.DynamicThings = "Explorando ASP.NET";
+
          return View(escuela);
       }
    }
