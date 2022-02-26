@@ -4,6 +4,6 @@ namespace NetCore_Platzi.Models
 {
    public class Alumno: ObjetoEscuelaBase
     {
-        public List<Evaluación> Evaluaciones { get; set; } = new List<Evaluación>();
+        public List<Evaluacion> Evaluaciones { get; set; } = new List<Evaluacion>();
     }
 }

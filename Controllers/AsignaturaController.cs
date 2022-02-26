@@ -12,7 +12,7 @@ namespace NetCore_Platzi.Controllers
          var asignatura = new Asignatura
          {
             Nombre = "Programación",
-            UniqueId = Guid.NewGuid().ToString()
+            Id = Guid.NewGuid().ToString()
          };
          return View(asignatura);
       }
@@ -22,23 +22,23 @@ namespace NetCore_Platzi.Controllers
          var listaAsignaturas = new List<Asignatura>() {
             new Asignatura {
             Nombre = "Matemáticas",
-            UniqueId = Guid.NewGuid ().ToString ()
+            Id = Guid.NewGuid ().ToString ()
             },
             new Asignatura {
             Nombre = "Educación Física",
-            UniqueId = Guid.NewGuid ().ToString ()
+            Id = Guid.NewGuid ().ToString ()
             },
             new Asignatura {
             Nombre = "Castellano",
-            UniqueId = Guid.NewGuid ().ToString ()
+            Id = Guid.NewGuid ().ToString ()
             },
             new Asignatura {
             Nombre = "Ciencias Naturales",
-            UniqueId = Guid.NewGuid ().ToString ()
+            Id = Guid.NewGuid ().ToString ()
             },
             new Asignatura {
             Nombre = "Programación",
-            UniqueId = Guid.NewGuid ().ToString ()
+            Id = Guid.NewGuid ().ToString ()
             }
          };
 
