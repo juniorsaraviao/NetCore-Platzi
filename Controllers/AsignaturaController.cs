@@ -2,50 +2,29 @@
 using NetCore_Platzi.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace NetCore_Platzi.Controllers
 {
    public class AsignaturaController : Controller
    {
-      public IActionResult Index()
+      private readonly EscuelaContext _context;
+      public AsignaturaController(EscuelaContext context)
       {
-         var asignatura = new Asignatura
-         {
-            Nombre = "Programación",
-            Id = Guid.NewGuid().ToString()
-         };
-         return View(asignatura);
+         _context = context;
+      }
+      public IActionResult Index()
+      {         
+         return View(_context.Asignaturas.FirstOrDefault());
       }
 
       public IActionResult MultiAsignatura()
-      {
-         var listaAsignaturas = new List<Asignatura>() {
-            new Asignatura {
-            Nombre = "Matemáticas",
-            Id = Guid.NewGuid ().ToString ()
-            },
-            new Asignatura {
-            Nombre = "Educación Física",
-            Id = Guid.NewGuid ().ToString ()
-            },
-            new Asignatura {
-            Nombre = "Castellano",
-            Id = Guid.NewGuid ().ToString ()
-            },
-            new Asignatura {
-            Nombre = "Ciencias Naturales",
-            Id = Guid.NewGuid ().ToString ()
-            },
-            new Asignatura {
-            Nombre = "Programación",
-            Id = Guid.NewGuid ().ToString ()
-            }
-         };
+      {         
 
          ViewBag.DynamicThings = "Explorando ASP.NET";
          ViewBag.Date = DateTime.Now;
 
-         return View(listaAsignaturas);
+         return View(_context.Asignaturas);
       }
    }
 }
