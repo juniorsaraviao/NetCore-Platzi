@@ -2,50 +2,40 @@
 using NetCore_Platzi.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace NetCore_Platzi.Controllers
 {
    public class AsignaturaController : Controller
    {
-      public IActionResult Index()
+      private readonly EscuelaContext _context;
+      public AsignaturaController(EscuelaContext context)
       {
-         var asignatura = new Asignatura
+         _context = context;
+      }
+
+      [Route("Asignatura/Index")]
+      [Route("Asignatura/Index/{asignaturaId}")]
+      public IActionResult Index(string asignaturaId)
+      {
+         if (!string.IsNullOrEmpty(asignaturaId))
          {
-            Nombre = "Programación",
-            Id = Guid.NewGuid().ToString()
-         };
-         return View(asignatura);
+            var asignatura = _context.Asignaturas.FirstOrDefault(x => x.Id == asignaturaId);
+            return View(asignatura);
+         }
+         else
+         {
+            return View("MultiAsignatura", _context.Asignaturas);
+         }         
       }
 
       public IActionResult MultiAsignatura()
-      {
-         var listaAsignaturas = new List<Asignatura>() {
-            new Asignatura {
-            Nombre = "Matemáticas",
-            Id = Guid.NewGuid ().ToString ()
-            },
-            new Asignatura {
-            Nombre = "Educación Física",
-            Id = Guid.NewGuid ().ToString ()
-            },
-            new Asignatura {
-            Nombre = "Castellano",
-            Id = Guid.NewGuid ().ToString ()
-            },
-            new Asignatura {
-            Nombre = "Ciencias Naturales",
-            Id = Guid.NewGuid ().ToString ()
-            },
-            new Asignatura {
-            Nombre = "Programación",
-            Id = Guid.NewGuid ().ToString ()
-            }
-         };
+      {         
 
          ViewBag.DynamicThings = "Explorando ASP.NET";
          ViewBag.Date = DateTime.Now;
 
-         return View(listaAsignaturas);
+         return View(_context.Asignaturas);
       }
    }
 }

@@ -31,20 +31,60 @@ namespace NetCore_Platzi.Models
          escuela.TipoEscuela = TiposEscuela.Secundaria;
          escuela.Dirección = "Av. Perú s/n";
 
+         var cursos = LoadCursos(escuela);
+         var asignaturas = LoadAsignaturas(cursos);
+         var alumnos = LoadAlumnos(cursos);
+
          modelBuilder.Entity<Escuela>().HasData(escuela);
-         modelBuilder.Entity<Asignatura>().HasData(
-            new List<Asignatura>() {
-                  new Asignatura { Nombre = "Matemáticas", Id = Guid.NewGuid ().ToString() },
-                  new Asignatura { Nombre = "Educación Física", Id = Guid.NewGuid ().ToString() },
-                  new Asignatura { Nombre = "Castellano", Id = Guid.NewGuid ().ToString() },
-                  new Asignatura { Nombre = "Ciencias Naturales", Id = Guid.NewGuid ().ToString() },
-                  new Asignatura { Nombre = "Programación", Id = Guid.NewGuid ().ToString() }
-               }
-         );
-         modelBuilder.Entity<Alumno>().HasData(GenerateRandomAlumno().ToArray());
+         modelBuilder.Entity<Curso>().HasData(cursos.ToArray()); // avoid errors in runtime
+         modelBuilder.Entity<Asignatura>().HasData(asignaturas.ToArray());
+         modelBuilder.Entity<Alumno>().HasData(alumnos.ToArray());
       }
 
-      private List<Alumno> GenerateRandomAlumno()
+      private static List<Curso> LoadCursos(Escuela escuela)
+      {
+         return new List<Curso>(){
+            new Curso{ EscuelaId = escuela.Id, Nombre = "101", Jornada = TiposJornada.Mañana },
+            new Curso{ EscuelaId = escuela.Id, Nombre = "201", Jornada = TiposJornada.Mañana},
+            new Curso{ EscuelaId = escuela.Id, Nombre = "301", Jornada = TiposJornada.Mañana},
+            new Curso{ EscuelaId = escuela.Id, Nombre = "401", Jornada = TiposJornada.Tarde},
+            new Curso{ EscuelaId = escuela.Id, Nombre = "501", Jornada = TiposJornada.Tarde},
+         };
+      }
+
+      private static List<Asignatura> LoadAsignaturas(List<Curso> cursos)
+      {
+         var fullList = new List<Asignatura>();
+         foreach (var curso in cursos)
+         {
+            var tmpList = new List<Asignatura> {
+               new Asignatura{ Id = Guid.NewGuid().ToString(), CursoId = curso.Id, Nombre = "Matemáticas"} ,
+               new Asignatura{ Id = Guid.NewGuid().ToString(), CursoId = curso.Id, Nombre = "Educación Física"},
+               new Asignatura{ Id = Guid.NewGuid().ToString(), CursoId = curso.Id, Nombre = "Castellano"},
+               new Asignatura{ Id = Guid.NewGuid().ToString(), CursoId = curso.Id, Nombre = "Ciencias Naturales"},
+               new Asignatura{ Id = Guid.NewGuid().ToString(), CursoId = curso.Id, Nombre = "Programación"}
+            };
+            fullList.AddRange(tmpList);
+         }
+
+         return fullList;
+      }
+
+      private List<Alumno> LoadAlumnos(List<Curso> cursos)
+      {
+         var alumnoList = new List<Alumno>();
+
+         var rnd = new Random();
+         foreach (var curso in cursos)
+         {
+            int cantRandom = rnd.Next(5, 20);
+            var tmplist = GenerateRandomAlumno(curso, cantRandom);
+            alumnoList.AddRange(tmplist);
+         }
+         return alumnoList;
+      }
+
+      private List<Alumno> GenerateRandomAlumno(Curso curso, int cantidad)
       {
          string[] nombre1 = { "Alba", "Felipa", "Eusebio", "Farid", "Donald", "Alvaro", "Nicolás" };
          string[] apellido1 = { "Ruiz", "Sarmiento", "Uribe", "Maduro", "Trump", "Toledo", "Herrera" };
@@ -53,9 +93,9 @@ namespace NetCore_Platzi.Models
          var listaAlumnos = from n1 in nombre1
                             from n2 in nombre2
                             from a1 in apellido1
-                            select new Alumno { Nombre = $"{n1} {n2} {a1}", Id = Guid.NewGuid().ToString() };
+                            select new Alumno { CursoId = curso.Id, Nombre = $"{n1} {n2} {a1}", Id = Guid.NewGuid().ToString() };
 
-         return listaAlumnos.OrderBy((al) => al.Id).ToList();
+         return listaAlumnos.OrderBy((al) => al.Id).Take(cantidad).ToList();
       }
    }
 }
