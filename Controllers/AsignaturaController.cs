@@ -13,9 +13,20 @@ namespace NetCore_Platzi.Controllers
       {
          _context = context;
       }
-      public IActionResult Index()
-      {         
-         return View(_context.Asignaturas.FirstOrDefault());
+
+      [Route("Asignatura/Index")]
+      [Route("Asignatura/Index/{asignaturaId}")]
+      public IActionResult Index(string asignaturaId)
+      {
+         if (!string.IsNullOrEmpty(asignaturaId))
+         {
+            var asignatura = _context.Asignaturas.FirstOrDefault(x => x.Id == asignaturaId);
+            return View(asignatura);
+         }
+         else
+         {
+            return View("MultiAsignatura", _context.Asignaturas);
+         }         
       }
 
       public IActionResult MultiAsignatura()
