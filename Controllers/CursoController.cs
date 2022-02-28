@@ -47,11 +47,19 @@ namespace NetCore_Platzi.Controllers
       {
          ViewBag.Date = DateTime.Now;
 
-         var school = _context.Escuelas.FirstOrDefault();
-         curso.EscuelaId = school.Id;
-         _context.Cursos.Add(curso);
-         _context.SaveChanges();
-         return View();
+         if (ModelState.IsValid)
+         {
+            var school = _context.Escuelas.FirstOrDefault();
+            curso.EscuelaId = school.Id;
+            _context.Cursos.Add(curso);
+            _context.SaveChanges();
+            ViewBag.ExtraMessage = "Curso creada";
+            return View("Index", curso);
+         }
+         else
+         {
+            return View(curso);
+         }
       }
    }
 }
