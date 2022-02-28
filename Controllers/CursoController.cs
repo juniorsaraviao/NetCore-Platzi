@@ -1,15 +1,14 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using NetCore_Platzi.Models;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace NetCore_Platzi.Controllers
 {
-   public class AlumnoController : Controller
+   public class CursoController : Controller
    {
       private readonly EscuelaContext _context;
-      public AlumnoController(EscuelaContext context)
+      public CursoController(EscuelaContext context)
       {
          _context = context;
       }
@@ -18,21 +17,21 @@ namespace NetCore_Platzi.Controllers
       {
          if (!string.IsNullOrEmpty(id))
          {
-            var asignatura = _context.Alumnos.FirstOrDefault(x => x.Id == id);
+            var asignatura = _context.Cursos.FirstOrDefault(x => x.Id == id);
             return View(asignatura);
          }
          else
          {
-            return View("MultiAlumno", _context.Alumnos);
+            return View("MultiCurso", _context.Cursos);
          }
       }
 
-      public IActionResult MultiAlumno()
+      public IActionResult MultiCurso()
       {
          ViewBag.DynamicThings = "Explorando ASP.NET";
          ViewBag.Date = DateTime.Now;
 
-         return View(_context.Alumnos);
+         return View(_context.Cursos);
       }
    }
 }
