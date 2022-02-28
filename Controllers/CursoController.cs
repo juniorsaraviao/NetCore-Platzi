@@ -33,5 +33,21 @@ namespace NetCore_Platzi.Controllers
 
          return View(_context.Cursos);
       }
+
+      public IActionResult Create()
+      {
+         
+         ViewBag.Date = DateTime.Now;
+
+         return View();
+      }
+
+      [HttpPost]
+      public IActionResult Create(Curso curso)
+      {
+         _context.Cursos.Add(curso);
+         _context.SaveChanges();
+         return View();
+      }
    }
 }
