@@ -45,6 +45,10 @@ namespace NetCore_Platzi.Controllers
       [HttpPost]
       public IActionResult Create(Curso curso)
       {
+         ViewBag.Date = DateTime.Now;
+
+         var school = _context.Escuelas.FirstOrDefault();
+         curso.EscuelaId = school.Id;
          _context.Cursos.Add(curso);
          _context.SaveChanges();
          return View();
