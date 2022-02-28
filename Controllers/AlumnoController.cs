@@ -13,9 +13,18 @@ namespace NetCore_Platzi.Controllers
       {
          _context = context;
       }
-      public IActionResult Index()
+
+      public IActionResult Index(string id)
       {
-         return View(_context.Alumnos.FirstOrDefault());
+         if (!string.IsNullOrEmpty(id))
+         {
+            var asignatura = _context.Alumnos.FirstOrDefault(x => x.Id == id);
+            return View(asignatura);
+         }
+         else
+         {
+            return View("MultiAlumno", _context.Alumnos);
+         }
       }
 
       public IActionResult MultiAlumno()
