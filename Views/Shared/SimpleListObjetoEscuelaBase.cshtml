@@ -1,19 +1,43 @@
 ﻿@model IEnumerable<ObjetoEscuelaBase>
 
+@{
+    var controller = ViewBag.Controller;
+}
+
 <table>
     <thead class="table table-dark table-hover">
         <tr>
             <th scope="col">Id</th>
             <th scope="col">Nombre</th>
+            <th scope="col">Opciones</th>
         </tr>
     </thead>
     <tbody>
         @foreach (var obj in @Model)
-         {
-             <tr>
-                 <td>@obj.Id</td>
-                 <td>@obj.Nombre</td>
-             </tr>
-         }
+        {
+            <tr>
+                <td>@obj.Id</td>
+                <td class="text-center">@obj.Nombre</td>
+                <td>
+                    <a asp-controller=@controller
+                       asp-action="index"
+                       asp-route-id=@obj.Id
+                       class="btn btn-secondary btn-sm ml-2">
+                        Detalles
+                    </a>
+                    <a asp-controller=@controller
+                       asp-action="update"
+                       asp-route-id=@obj.Id
+                       class="btn btn-info btn-sm ml-2">
+                        Editar
+                    </a>
+                    <a asp-controller=@controller
+                       asp-action="delete"
+                       asp-route-id=@obj.Id
+                       class="btn btn-danger btn-sm ml-2">
+                        Eliminar
+                    </a>
+            </tr>
+        }
     </tbody>
 </table>
