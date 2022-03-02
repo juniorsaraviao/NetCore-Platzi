@@ -22,8 +22,13 @@ namespace NetCore_Platzi
         {
             services.AddControllersWithViews();
 
+            //services.AddDbContext<EscuelaContext>(
+            //   options => options.UseInMemoryDatabase(databaseName: "testDb")
+            //);
+
+            var connString = ConfigurationExtensions.GetConnectionString(this.Configuration, "DefaultConnectionString");
             services.AddDbContext<EscuelaContext>(
-               options => options.UseInMemoryDatabase(databaseName: "testDb")
+               options => options.UseSqlServer(connString)
             );
         }
 
