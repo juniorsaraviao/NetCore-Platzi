@@ -44,11 +44,11 @@ namespace NetCore_Platzi.Models
       private static List<Curso> LoadCursos(Escuela escuela)
       {
          return new List<Curso>(){
-            new Curso{ EscuelaId = escuela.Id, Nombre = "101", Jornada = TiposJornada.Mañana },
-            new Curso{ EscuelaId = escuela.Id, Nombre = "201", Jornada = TiposJornada.Mañana},
-            new Curso{ EscuelaId = escuela.Id, Nombre = "301", Jornada = TiposJornada.Mañana},
-            new Curso{ EscuelaId = escuela.Id, Nombre = "401", Jornada = TiposJornada.Tarde},
-            new Curso{ EscuelaId = escuela.Id, Nombre = "501", Jornada = TiposJornada.Tarde},
+            new Curso { EscuelaId = escuela.Id, Nombre = "101", Jornada = TiposJornada.Mañana, Dirección = "Av. Lima 152" },
+            new Curso { EscuelaId = escuela.Id, Nombre = "201", Jornada = TiposJornada.Mañana, Dirección = "Av. Lima 152" },
+            new Curso { EscuelaId = escuela.Id, Nombre = "301", Jornada = TiposJornada.Mañana, Dirección = "Av. Lima 152" },
+            new Curso { EscuelaId = escuela.Id, Nombre = "401", Jornada = TiposJornada.Tarde, Dirección = "Av. Lima 152" },
+            new Curso { EscuelaId = escuela.Id, Nombre = "501", Jornada = TiposJornada.Tarde, Dirección = "Av. Lima 152" }
          };
       }
 
